@@ -1,0 +1,256 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'SchoolSafeBoardMarker';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/HakgyoansimBoadmarkerR.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NeoDunggeunmo';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/NeoDunggeunmo.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "SchoolSafeBoardMarker", "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-pixel: "SchoolSafeBoardMarker", "Press Start 2P", cursive;
+  --font-display: "SchoolSafeBoardMarker", "Space Grotesk", sans-serif;
+}
+
+:root {
+  background-color: #FFF9E6;
+}
+
+body {
+  @apply antialiased text-slate-800 bg-[#FFF9E6];
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Colorful Retro Theme Overrides */
+.theme-retro {
+  font-family: 'NeoDunggeunmo', 'Press Start 2P', monospace !important;
+  background-color: #241349 !important;
+  background-image: radial-gradient(#ef4444 10%, transparent 10%), radial-gradient(#06b6d4 10%, transparent 10%), radial-gradient(#eab308 10%, transparent 10%) !important;
+  background-size: 24px 24px !important;
+  background-position: 0 0, 8px 8px, 16px 16px !important;
+  font-size: 13.5px !important;
+}
+
+.theme-retro * {
+  font-family: 'NeoDunggeunmo', 'Press Start 2P', monospace !important;
+  letter-spacing: -0.04em !important;
+}
+
+/* Specific text-size reductions to prevent overflow and line wrap under pixel typography */
+.theme-retro .text-sm,
+.theme-retro h4.text-sm {
+  font-size: 12.5px !important;
+}
+
+.theme-retro .text-xs {
+  font-size: 10.5px !important;
+}
+
+.theme-retro .text-lg {
+  font-size: 16px !important;
+}
+
+.theme-retro .text-xl {
+  font-size: 18px !important;
+}
+
+.theme-retro .text-2xl {
+  font-size: 20px !important;
+}
+
+.theme-retro .text-\[10px\] {
+  font-size: 9px !important;
+}
+
+.theme-retro .text-\[11px\] {
+  font-size: 9.5px !important;
+}
+
+/* Compress button and tab bar elements to avoid wrapping */
+.theme-retro button {
+  font-size: 11px !important;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}
+
+.theme-retro .grid-cols-5 button {
+  padding-left: 0.25rem !important;
+  padding-right: 0.25rem !important;
+}
+
+.theme-retro .grid-cols-5 button span.text-\[10px\] {
+  font-size: 9px !important;
+}
+
+.theme-retro .grid-cols-3 button {
+  font-size: 9.5px !important;
+  padding-left: 0.25rem !important;
+  padding-right: 0.25rem !important;
+  white-space: nowrap !important;
+}
+
+/* Prevent layout list item flex items from wrapping */
+.theme-retro .flex.items-center.justify-between {
+  flex-wrap: nowrap !important;
+  gap: 0.5rem !important;
+}
+
+/* Colorful Retro Card & Layout Elements */
+.theme-retro .game-card,
+.theme-retro div.bg-white,
+.theme-retro div.bg-slate-900,
+.theme-retro div.bg-slate-850,
+.theme-retro form {
+  background-color: #17092c !important;
+  border: 4px solid #00f0ff !important;
+  color: #ffffff !important;
+  box-shadow: 4px 4px 0px #ff006e !important;
+}
+
+/* Neon Headlines */
+.theme-retro h1,
+.theme-retro h2,
+.theme-retro h3,
+.theme-retro h4 {
+  color: #facc15 !important;
+  text-shadow: 2px 2px 0px rgba(255, 0, 110, 0.4) !important;
+}
+
+.theme-retro p,
+.theme-retro span,
+.theme-retro label {
+  color: #e2e8f0 !important;
+}
+
+.theme-retro .text-slate-900 {
+  color: #ffffff !important;
+}
+
+.theme-retro .text-slate-500 {
+  color: #cbd5e1 !important;
+}
+
+.theme-retro .text-slate-400 {
+  color: #94a3b8 !important;
+}
+
+/* Status & Stats items */
+.theme-retro .bg-slate-50,
+.theme-retro div[class*="bg-slate-50"],
+.theme-retro div[class*="bg-indigo-50"] {
+  background-color: #110624 !important;
+  border-color: #00f0ff !important;
+}
+
+/* Form elements in Retro */
+.theme-retro input,
+.theme-retro select,
+.theme-retro textarea {
+  background-color: #1c0e35 !important;
+  border: 2px solid #ffd166 !important;
+  color: #ffffff !important;
+}
+
+/* Buttons in Retro options and cards */
+.theme-retro button.bg-slate-100 {
+  background-color: #110624 !important;
+  color: #00f0ff !important;
+  border-color: #00f0ff !important;
+}
+
+.theme-retro button.bg-slate-400 {
+  background-color: #ff006e !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+.theme-retro div.bg-green-100 {
+  background-color: #064e3b !important;
+  border-color: #34d399 !important;
+  color: #a7f3d0 !important;
+}
+
+.theme-retro div.bg-amber-100 {
+  background-color: #312e81 !important;
+  border-color: #6366f1 !important;
+  color: #e0e7ff !important;
+}
+
+/* Pixel Art Theme Styles */
+.game-card {
+  @apply border-4 border-slate-900 shadow-[4px_4px_0px_#000] bg-white transition-all;
+  image-rendering: pixelated;
+}
+
+.game-card-hover:hover {
+  @apply -translate-x-1 -translate-y-1 shadow-[8px_8px_0px_#000];
+}
+
+.progress-bar {
+  @apply h-6 bg-slate-200 border-4 border-slate-900 rounded-none overflow-hidden relative;
+}
+
+.progress-fill {
+  @apply h-full bg-green-500 transition-all duration-300;
+  background-image: linear-gradient(0deg, rgba(0,0,0,0.2) 0%, rgba(255,255,255,0.2) 100%);
+}
+
+.character-ring {
+  @apply border-4 border-dashed border-slate-400 rounded-none;
+}
+
+/* Button variants */
+.btn-game-primary {
+  @apply bg-sky-500 text-white font-bold rounded-none border-b-8 border-r-8 border-sky-800 active:border-b-0 active:border-r-0 active:translate-x-1 active:translate-y-1 transition-all uppercase px-6 py-4;
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+}
+
+.btn-game-rose {
+  @apply bg-rose-500 text-white font-bold rounded-none border-b-8 border-r-8 border-rose-800 active:border-b-0 active:border-r-0 active:translate-x-1 active:translate-y-1 transition-all uppercase px-6 py-4;
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+}
+
+.btn-game-amber {
+  @apply bg-amber-400 text-slate-900 font-bold rounded-none border-b-8 border-r-8 border-amber-700 active:border-b-0 active:border-r-0 active:translate-x-1 active:translate-y-1 transition-all uppercase px-6 py-4;
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+}
+
+/* Retro Typography */
+.pixel-title {
+  font-family: var(--font-pixel);
+  @apply uppercase tracking-tight;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FFFBEB;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
