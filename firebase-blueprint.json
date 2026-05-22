@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "userProfile": {
+      "title": "User Profile",
+      "description": "Stores user pet and game progress",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "displayName": { "type": "string" },
+        "petType": { "type": "string", "enum": ["Fire Egg", "Water Egg", "Earth Egg", "Wind Egg"] },
+        "evolutionStage": { "type": "string", "enum": ["알", "새끼", "성체"] },
+        "level": { "type": "integer" },
+        "experience": { "type": "integer" },
+        "maxExperience": { "type": "integer" },
+        "gold": { "type": "integer" },
+        "stats": {
+          "type": "object",
+          "properties": {
+            "strength": { "type": "integer" },
+            "intelligence": { "type": "integer" },
+            "agility": { "type": "integer" },
+            "charisma": { "type": "integer" }
+          }
+        },
+        "avatarUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "petType", "evolutionStage", "level", "experience"]
+    },
+    "quest": {
+      "title": "Quest",
+      "description": "A scheduled task or todo item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "difficulty": { "type": "string", "enum": ["Easy", "Medium", "Hard", "Epic"] },
+        "category": { "type": "string", "enum": ["Work", "Study", "Health", "Social", "Misc"] },
+        "status": { "type": "string", "enum": ["Active", "Completed", "Failed"] },
+        "rewardExp": { "type": "integer" },
+        "rewardGold": { "type": "integer" },
+        "dueDate": { "type": "string", "format": "date-time" },
+        "completedAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["ownerId", "title", "difficulty", "category", "status"]
+    }
+  },
+  "firestore": {
+    "/userProfiles/{userId}": {
+      "schema": "userProfile",
+      "description": "User game data"
+    },
+    "/userProfiles/{userId}/quests/{questId}": {
+      "schema": "quest",
+      "description": "User quests"
+    }
+  }
+}

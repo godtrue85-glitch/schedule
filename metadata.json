@@ -1,0 +1,8 @@
+{
+  "name": "QuestLog: Gamified Scheduler",
+  "description": "A mobile-first task manager that turns your daily schedule into an RPG adventure with leveling characters.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

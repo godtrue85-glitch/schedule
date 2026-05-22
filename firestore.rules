@@ -1,0 +1,105 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Connection test collection
+    match /test/{document} {
+      allow read: if true;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // User Profiles
+    match /userProfiles/{userId} {
+      allow get: if isOwner(userId);
+      allow create: if isOwner(userId) && 
+        isValidUserProfile(incoming()) && 
+        incoming().userId == request.auth.uid;
+      allow update: if isOwner(userId) && 
+        isValidUserProfile(incoming());
+
+      function isValidUserProfile(data) {
+        return data.userId is string && 
+               data.displayName is string && data.displayName.size() <= 100 &&
+               data.level is int && data.level >= 1 &&
+               data.experience is int && data.experience >= 0 &&
+               data.maxExperience is int && data.maxExperience > 0 &&
+               data.gold is int && data.gold >= 0 &&
+               data.petType in [
+                 'Fire Egg', 'Water Egg', 'Earth Egg', 'Wind Egg', 'Maltese', 'Husky', 'Corgi',
+                 'Scottish Fold', 'Persian Cat', 'Siamese Cat', 'Ferret', 'Hamster', 'Hedgehog',
+                 'Rabbit', 'Red Panda', 'Fennec Fox', 'Bear', 'Lion', 'Tiger', 'Otter', 'Alpaca',
+                 'Panda', 'Penguin', 'Koala'
+               ] &&
+               data.evolutionStage in ['알 (EGG)', '아기 (BABY)', '소년 (TEEN)', '성체 (ADULT)'] &&
+               (!('avatarUrl' in data) || data.avatarUrl == null || data.avatarUrl is string) &&
+               (!('eggRarity' in data) || data.eggRarity == null || data.eggRarity is string) &&
+               (!('eggColor' in data) || data.eggColor == null || data.eggColor is string) &&
+               (!('equippedAccessory' in data) || data.equippedAccessory == null || data.equippedAccessory is string) &&
+               (!('ownedAccessories' in data) || data.ownedAccessories == null || data.ownedAccessories is list) &&
+                (!('discoveredPets' in data) || data.discoveredPets == null || data.discoveredPets is list) &&
+               (!('claimedAchievements' in data) || data.claimedAchievements == null || data.claimedAchievements is list) &&
+               (!('createdAt' in data) || data.createdAt == null || data.createdAt is timestamp) &&
+               // Robust stats check supporting both current (vitality, wisdom...) & legacy schemas
+               (!('vitality' in data.stats) || data.stats.vitality is int) &&
+               (!('wisdom' in data.stats) || data.stats.wisdom is int) &&
+               (!('focus' in data.stats) || data.stats.focus is int) &&
+               (!('connection' in data.stats) || data.stats.connection is int) &&
+               (!('strength' in data.stats) || data.stats.strength is int) &&
+               (!('intelligence' in data.stats) || data.stats.intelligence is int) &&
+               (!('agility' in data.stats) || data.stats.agility is int) &&
+               (!('charisma' in data.stats) || data.stats.charisma is int);
+      }
+
+      // Quests Subcollection
+      match /quests/{questId} {
+        allow list: if isOwner(userId);
+        allow get: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidQuest(incoming()) && incoming().ownerId == request.auth.uid;
+        allow update: if isOwner(userId) && isValidQuest(incoming()) && (
+          // Action: Complete Quest
+          (incoming().status == 'Completed' && existing().status == 'Active' && incoming().diff(existing()).affectedKeys().hasOnly(['status', 'completedAt'])) ||
+          // Action: Delete (effectively canceling)
+          (incoming().status == 'Failed' && incoming().diff(existing()).affectedKeys().hasOnly(['status']))
+        );
+        allow delete: if isOwner(userId);
+
+        function isValidQuest(data) {
+          return data.ownerId is string &&
+                 data.title is string && data.title.size() <= 1000 &&
+                 (!('description' in data) || data.description == null || data.description is string) &&
+                 (!('createdAt' in data) || data.createdAt == null || data.createdAt is timestamp) &&
+                 (!('completedAt' in data) || data.completedAt == null || data.completedAt is timestamp) &&
+                 data.difficulty in ['Easy', 'Medium', 'Hard', 'Epic'] &&
+                 data.category in ['Work', 'Study', 'Health', 'Social', 'Misc'] &&
+                 data.status in ['Active', 'Completed', 'Failed'] &&
+                 (data.rewardExp is int || data.rewardExp is float || data.rewardExp is number) &&
+                 (data.rewardGold is int || data.rewardGold is float || data.rewardGold is number);
+        }
+      }
+    }
+  }
+}
